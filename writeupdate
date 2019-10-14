@@ -1,0 +1,83 @@
+#include<iostream>
+#include<fstream>
+
+class employee
+{
+private:
+	int empno;
+	char empname[50];
+	int sal;
+public:
+	void getdata()
+	{
+		cout<<"Enter the Employee No:";
+		cin>>empno;
+		cout<<endl<<"Enter the Employee Name:";
+		cin>>empname;
+		cout<<endl<<"Enter the Salary:";
+		cin>>sal;
+	}
+	void showdata()
+	{
+		cout<<"Employee No  :"<<empno<<endl;
+		cout<<"Employee Name:"<<empname<<endl;
+		cout<<"Employee sal :"<<sal<<endl;
+	}
+	void writedata()
+	{
+		ofstream out("emp.txt",ios::app);
+		getdata();
+		out.write((char *)this,sizeof(employee));
+		out.close();
+	}
+	void searchdata()
+	{
+		int no;employee e;
+		ifstream in("emp.txt",ios::in);
+		cout<<"Enter the Employee no:"<<endl;
+		cin>>no;
+		
+		do
+		{
+			in.read((char *)&e,sizeof(employee));
+			if(no==e.empno)
+			{
+			e.showdata();
+			break;
+			}
+			
+		}while(!in.eof());
+		in.close();
+	}
+	void deletedata()
+	{
+		employee e1,e2;int no;
+		fstream fob("emp.txt",ios::in | ios::out);
+		cout<<"Enter the Employee no:"<<endl;
+		cin>>no;
+		
+		do
+		{
+			fob.read((char *)&e1,sizeof(employee));
+			if(no==e1.empno)
+			{
+				e1.showdata();
+				break;
+			}
+			
+		}while(!fob.eof());
+		fob.seekp(-sizeof(employee),ios::cur);
+		fob.write((char *)&e2,sizeof(employee));
+		cout<<"Record Deleted";
+		fob.close();
+	}
+};
+
+void main()
+{
+	employee ob1;
+//	ob1.writedata();
+	ob1.searchdata();
+	//ob1.updatedata();
+
+}
