@@ -1,0 +1,84 @@
+//Birthday.h
+#ifndef BIRTHDAY_H_INCLUDED
+#define BIRTHDAY_H_INCLUDED
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Birthday{
+
+public:
+    Birthday(int aMonth, int aDay, int aYear);
+    void printDate();
+private:
+    int month;
+    int day;
+    int year;
+};
+#endif // BIRTHDAY_H_INCLUDED
+/******************/
+//Birthday.cpp
+#include "Birthday.h"
+
+Birthday::Birthday(int aMonth, int aDay, int aYear){
+        month = aMonth;
+        day = aDay;
+        year = aYear;
+    }
+void Birthday::printDate(){
+        cout<<month <<"/" <<day <<"/" <<year <<endl;
+}
+/******************/
+//People.h
+#ifndef PEOPLE_H
+#define PEOPLE_H
+#include "People.h"
+#include <iostream>
+#include <string>
+#include "Birthday.h"
+
+using namespace std;
+
+class People{
+public:
+    People();
+    People(string cname, Birthday cdateOfBirth);
+    void printInfo();
+
+private:
+    string name;
+    Birthday dateOfBirth;
+};
+#endif // PEOPLE_H
+/***********************/
+//People.cpp
+#include "People.h"
+
+#include "Birthday.h"
+
+using namespace std;
+
+
+    People::People(string cname, Birthday cdateOfBirth):name(cname), dateOfBirth(cdateOfBirth)
+    //data member initializer list
+    {
+
+    }
+    void People::printInfo(){
+        cout<<name <<" was born on: ";
+        dateOfBirth.printDate();
+    }
+/********************/
+//main.cpp
+//Driver 
+#include "People.h"
+#include <iostream>
+#include <string>
+#include "Birthday.h"
+
+int main() {
+    Birthday birthObject(7,9,97);
+    People infoObject("Bob the musician", birthObject);
+    infoObject.printInfo();
+}
+
