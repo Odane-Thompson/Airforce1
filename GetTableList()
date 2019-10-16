@@ -1,0 +1,18 @@
+Public Function GetTableList() As ArrayList
+    If Not OpenConnection() Then Return Nothing
+    Dim arrReturn As New ArrayList
+    Dim oDA As New SqlDataAdapter("SELECT * FROM sysobjects " & _
+        "WHERE (xtype = 'U') AND ([name]<>'dtproperties') ORDER BY [name]", cnnCom)
+    Dim oDS As New DataSet
+    oDA.Fill(oDS)
+    CloseConnection()
+    Dim oDR As DataRow
+    If oDS.Tables(0).Rows.Count > 0 Then
+        For Each oDR In oDS.Tables(0).Rows
+            arrReturn.Add(oDR("name"))
+        Next
+        Return arrReturn
+    Else
+        Return Nothing
+    End If
+End Function
